@@ -1,0 +1,279 @@
+armour = 0
+helmet = 0
+gold = 0
+defence = 0
+atk = 0
+spd = 15
+import sys
+import os
+import random
+import time
+def add(x, y):
+   return x + y
+def subtract(x, y):
+   return x - y
+def multiply(x, y):
+   return x * y
+def divide(x, y):
+   return x / y
+armourStatus = True
+weaponStatus = True
+directionStatus = True
+characterStatus = True
+potion1choiceStatus = True
+selectitem1 = True
+stpotion = 0
+hppotion = 0
+luckcrystal = 0
+crystalhelmet = 0
+exp = 0
+bearfightStatus = True
+hp = 25
+atk = 0
+spatk = 0
+maxhp = 25
+tutorialStatus = True
+def speech(phrase):
+  for character in phrase:
+    sys.stdout.write(character)
+    sys.stdout.flush()
+    time.sleep(0.03)
+def slowspeech(phrase):
+  for character in phrase:
+    sys.stdout.write(character)
+    sys.stdout.flush()
+    time.sleep(0.9)
+speech("Do you want a tutorial on how the game works? Y/N\n")
+tuto=input("\n")
+if tuto == "y":
+  while tutorialStatus:
+   speech("What do you want to learn about?\n1) Fighting\n2) Stats\n3) Items\n4) Armour\n5) Accessories\n6) Biomes and buildings\n\nPress W to exit the tutorial.")
+   tuto1=input("\n")
+   if tuto1 == "1":
+     speech("When you encounter an enemy, you will have the option to fight or flee. If you have a higher spd stat than them, you can exit. If not, they will catch up with you and damage you. Your chance of dodging an attack is higher or lower depending on spd.\n")
+   elif tuto1 == "2":
+      speech("There are different stats for different weapons, for an example, armour could give you -5 spd, but 10 def. Which stat do you want to learn about?\n1) Atk\n2) Def\n3) Spd\n4) Hp\n5) LvL\n6) Luck")
+      tuto2=input("\n")
+      if tuto2 == "1":
+        speech("Atk is the average attack damage of a weapon or character. It is usually different, for an example, if the atk is 15, it could do 10-20 damage, but some weapons are more precise, like 14-16 damage.\n")
+      elif tuto2 == "2":
+        speech("Def is the defence of a character. It allows you to take less damage per hit, so if you had 34 def and someone with 50 atk hit you, it would only do 16 damage to you. There are some attacks, mostly spells, that ignore def, and just drain your hp.\n")
+      elif tuto2 == "3":
+        speech("Spd is the speed of a character. Higher speed allows you to dodge attacks easlier, and if you have more spd than an enemy, you can run from them.\n")
+      elif tuto2 == "4":
+        speech("When a character's hp drops to zero, they die.\n")
+      elif tuto2 == "5":
+        speech("You gain LvL by killing monsters, and the higher LvL you are, the higher stats you have.")
+      elif tuto2 == "6":
+        speech("Luck is used for many things, mainly loot, traps, and dodging attacks. Which one do you want to learn about?\n1) Loot chances\n2) Traps\n3) Dodging attacks.")
+        tuto3=input("\n")
+        if tuto3 == "1":
+          speech("The rarity of loot you get is dependant on chance. The higher luck you have, the less rare items become.")
+        elif tuto3 == "2":
+          speech("Traps are triggered on luck, the higher luck you have, the lower chance of triggering a trap you have. However, there are some items that lower your chance of triggering traps, but don't affect luck.")
+        elif tuto3 == "3":
+          speech("The chance of dodging an attack is 1/10 if you have lower speed as an enemy, 2/10 if you have the same speed as them, and 3/10 if you have higher speed than them. However, it can be changed by different items and accessories.")        
+   elif tuto1 == "3":
+      speech("Items are limited use power-ups that you can get from a shop, or find around the world, like healing potions, or special ammunition. Potions are 50 gold each, and special ammunition is 10 gold each, but you always find, or buy them in groups worth 50-100 gold.\n")
+   elif tuto1 == "4":
+      speech("There are 2 types of armour, body, and helmet. You could replace one of them with a better one if you find it, for an example, you could replace an iron helmet for a steel one.\n")
+   elif tuto1 == "5":
+      speech("Accessories are unlimited use items which can be equipped without taking up any slots, like armour slots, and give small, useful bonuses, like +15% atk. They can be bought from shops, or found randomly.\n")
+   elif tuto1 == "6":
+      speech("The main biomes in the game are:\n1) Desert\n2) Forest\n3) Caves\nWhich one would you like to learn about?")
+   else:
+    tutorialStatus = False
+  else:
+   tutorialStatus = False
+else:
+  tutorialStatus = False
+speech("You have been assigned the job of destroying an evil witch called Erin the Evil, and you must guide your character using text.\n")
+while characterStatus:
+  speech("Name your character, 7 letters maximum.")
+  character=input("\n")
+  if len(character) < 8:
+    characterStatus = False
+  else:
+    speech("That name is too long.")
+while weaponStatus:
+  speech(character + " is standing outside the house, getting ready for the adventure, but can't decide what to bring. Should you take the sword (20 atk, short range), or the bow (10 atk, long range)?")
+  weapon=input("\n")
+  if weapon == "bow":
+    speech("You chose the bow.\n")
+    atk += 10
+    weaponrange = "long"
+    weaponStatus = False
+  elif weapon == "sword":
+    speech("You chose the sword.\n")
+    atk += 20
+    weaponrange = "short"
+    weaponStatus = False
+  else:
+    speech("Choose the bow or the sword.\n")
+while armourStatus:
+  speech("Do you want to bring the chainmail body armour (-5 spd, 5 def) or the iron body armour (-10 spd, 10 def)?")
+  armour=input("\n")
+  if armour == "chainmail":
+    armour = 1
+    defence += 5
+    spd -= 10
+    speech("You chose the chainmail.\n")
+    armourStatus = False
+  elif armour == "iron":
+    armour = 1
+    defence += 10
+    spd -= 5
+    speech("You chose the iron armour.\n")
+    armourStatus = False
+  else:
+    speech("Choose the chainmail or iron.\n")
+while potion1choiceStatus:
+  speech("You find a small shop, with many potions and helpful items in. You find 4 items that you can afford, but buying one of them will take up all of your money.\n")
+  speech("Do you want to buy\n1) Healing potion (Maxes out hp, one use.)\n2) Strength potion (+10 atk for one turn, one use.)\n3) Crystal of luck (+10% luck, infinte uses.)\n4) Crystal helmet (+5 def, when equipped.)\n\nEnter W to exit the shop.") 
+  item2=input("\n")
+  if item2 == "1":
+    hppotion = 1
+    item = 1
+    speech("You bought the healing potion.\n")
+    potion1choiceStatus = False
+  elif item2 == "2":
+    stpotion = 10
+    speech("You bought the strength potion.\n")
+    potion1choiceStatus = False
+  elif item2 == "3":
+    luckcrystal = 1
+    speech("You bought the crystal of luck.\n")
+    potion1choiceStatus = False
+  elif item2 == "4":
+    helmet = 1
+    defence += 5
+    speech("You bought the crystal helmet.\n")
+    item = 0
+    potion1choiceStatus = False
+  elif item2 == "w":
+    speech("You left the shop.\n")
+    item = 0
+    gold += 50
+    potion1choiceStatus = False
+  else:
+    ("\n")
+while directionStatus:
+  speech("Should you travel North, into the forest, or south, into the desert?\n")
+  direction=input("\n")
+  if direction == "south":
+    speech("You decided to go South.\n")
+    directionStatus = False
+  elif direction == "north":
+    speech("You decided to go North.\n")
+    directionStatus = False
+  else:
+    speech("Invalid answer.\n")
+    pass
+if direction == "north":
+  speech("A huge bear appeared! (20 atk, 20 hp, 5 spd, 5 def.)\n")
+  ehp = 20
+  while bearfightStatus:
+    if hp > 2:
+      speech("\n")
+    else:
+      slowspeech("Y O U   D I E D.\n")
+      break
+    enemyatk = 20
+    edefence = 10
+    espd = 5
+    speech("Your stats are:\n")
+    speech(str(hp) + " hp remaining.\n")
+    speech(str(atk) + " atk.\n")
+    speech(str(spd) + " spd.\n")
+    speech(str(defence) + " def.\n")
+    speech("Will you fight or flee?\n")
+    action=input("\n")
+    if action == "fight":
+      speech("You chose to fight.\n")
+      rand = random.randint(1,10)
+      item = stpotion + hppotion
+      if item > 0:
+        speech("Do you want to use an item? Y/N\n")
+        item1=input("\n")
+        if item1 == "y":
+          while selectitem1:
+            if stpotion > 0:
+              spatk = atk + stpotion
+              stpotion = 0
+              edamage = spatk - edefence
+              ehp -= edamage
+              selectitem1 = False
+            elif hppotion > 0:
+              hp = maxhp
+              hppotion = 0
+              edamage = atk - edefence
+              ehp -= edamage
+              selectitem1 = False
+      else:
+        ("\n")
+      edamage = atk - edefence
+      ehp -= edamage
+      if luckcrystal > 0:
+        rand =- 1
+      else:
+        speech("\n")
+      if spd > espd:
+        rand -= 1
+      elif spd == espd:
+        rand += 0
+      else:
+        rand += 1
+      if rand > 0:
+        damage = enemyatk - defence
+        hp -= damage
+        speech("The enemy landed a hit!\n")
+        if hp > 0:
+          print("\n")
+        else:
+          slowspeech("Y O U   D I E D.\n")
+          break
+      else:
+        speech("You dodged the enemy's attack!\n")
+      speech(str(ehp) + " enemy hp remaining.\n")
+      if ehp > 0:
+        ("\n")
+      else:
+        speech("You won! You gained 5 exp! Only 5 more exp until level 2!\n")
+        speech("You come to the end of the forest, and all around you is desert.\n")
+        exp = 5
+        bearfightStatus = False
+    elif action == "flee":
+      if spd > espd:
+        speech("You escaped.\n")
+        bearfightStatus = False
+      else:
+        damage = enemyatk - defence
+        hp -= damage
+        speech("You tried to run away, but you weren't fast enough, and the enemy attacked you.\n")
+        if hp > 0:
+          speech("\n")
+        else:
+          slowspeech("Y O U   D I E D.\n")
+          break
+    else:
+      speech("Choose to fight or flee.\n")
+speech("You see a pyramind ahead. Most of it is underneath the ground, but at the top there is a small hole, just small enough to squeeze through if you are not wearing any armour. Do you want to drop your armour and go through? Y/N\n")
+pyra1=input("*WARNING. THIS WILL DROP YOUR DEFENCE TO ZERO AND YOUR SPEED WILL GO UP TO 15.*\n")
+if pyra1 == "n:
+  speech("You decided not to go in the pyramid.")
+elif pyra1 == "y":
+  armour = 0
+  helmet = 0
+  defence = 0
+  speech("You climb into the pyramid, and discard your armour and helmet. After walking along a long corridor, you see a chest. Do you want to open it? Y/N")
+  chest1=input("\n")
+  if chest1 == "y":
+    rand1 = random.randint (1,10)
+    if luckcrystal == 1:
+      rand1 -= 1
+    if rand1 > 9:
+      speech("The chest was trapped, and you were shot by an arrow!")
+      hp -= 5
+    else:
+      speech("You got 100 gold!")
+      gold += 100
